@@ -8,7 +8,9 @@ const addHouse = (req,res)=>{
     House.create(
         {
             name: req.body.name,
-            address: req.body.address
+            address: req.body.address,
+            size: req.body.size,
+            roomsNumber: req.body.roomsNumber
         }
     )  
 

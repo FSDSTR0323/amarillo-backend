@@ -9,7 +9,7 @@ const roomSchema= new Schema({
     },
     roomType: {
         type: String,
-        enum: ['Kitchen', 'Lounge', 'Room', 'Bathroom', 'Garden', 'Dinning Room'],
+        enum: ['Kitchen', 'Lounge', 'Room', 'Bathroom', 'Garden', 'Dinning Room', 'Office'],
         required: true
     },
     roomImage: {
