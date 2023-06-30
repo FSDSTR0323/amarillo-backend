@@ -12,7 +12,7 @@ const authRequired=(req,res,next)=>{
 
     if (!token) return res.status(401).json({message:"No hay token, no está autorizado"})
 
-    jwt.verify(token,mySecret,(error, user)=>{
+    jwt.verify(token, mySecret,(error, user)=>{
         if (error) return res.status(403).json({message:"Token inválido"});
         req.user=user
         req.token=token
