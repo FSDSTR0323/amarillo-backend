@@ -35,6 +35,9 @@ app.use('/users', users)
 const devices = require('./src/routes/devices.js')
 app.use('/devices', devices)
 
+//const houses = require('./src/routes/houses.js')
+//app.use('/houses', houses)
+
 const houses = require('./src/routes/houses.js')
 app.use('/houses', houses)
 
