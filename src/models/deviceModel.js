@@ -6,12 +6,13 @@ const deviceSchema= new Schema({
     deviceType: {
         type: String,
         enum: ['lightbulb', 'blinders', 'temperature', 'furniture'],
-        required: true
+        required: true,
+        unique:true
     },
     status: {
         type: String,
         enum: ['On', 'Off'],
-        required: true
+        
     },
     data: {},       //Posibles datos de los dispositivos a representar
     roomId:{

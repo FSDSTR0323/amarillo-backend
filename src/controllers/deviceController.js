@@ -1,5 +1,6 @@
 const Device = require('../models/deviceModel.js')
 
+
 //Añadimos una nuevo dispositivo
 const addDevice = async (req,res)=>{
     try {
@@ -9,6 +10,7 @@ const addDevice = async (req,res)=>{
         if (existingDevice) {
             return res.status(400).send({msg:'Este Device ya está registrado.'})
         }
+
         Device.create(
             {
                 name,
@@ -91,7 +93,7 @@ const updateDevice = (req, res) => {
 
 //Eliminamos nuestro dispositivo. DELETE
 const deleteDevice = (req, res) => {
-    Device.findOneAndUpdate(
+    Device.findOneAndDelete(
         {
             _id: req.params.deviceId,
             //status: { $ne: "DELETED" }
