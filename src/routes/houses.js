@@ -1,6 +1,8 @@
 var express = require('express');
 const { authRequired } = require('../middlewares/validateToken.js');
 var router = express.Router();
+const { authRequired } = require('../middlewares/validateToken.js');
+
 
 houseController =require('../controllers/houseController.js');
 
