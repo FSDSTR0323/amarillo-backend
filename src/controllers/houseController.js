@@ -10,7 +10,8 @@ const addHouse = (req,res)=>{
             name: req.body.name,
             address: req.body.address,
             size: req.body.size,
-            roomsNumber: req.body.roomsNumber
+            roomsNumber: req.body.roomsNumber,
+            userId: req.user.id
         }
     )  
 

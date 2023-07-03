@@ -16,7 +16,7 @@ const authRequired=(req,res,next)=>{
         if (error) return res.status(403).json({message:"Token inválido"});
         req.user=user
         req.token=token
-        console.log("req.user decodificado: ", req.user)
+        //console.log("req.user decodificado: ", req.user)
         next();
     })
 
