@@ -3,7 +3,6 @@ const { authRequired } = require('../middlewares/validateToken.js');
 var router = express.Router();
 
 
-
 houseController =require('../controllers/houseController.js');
 
 router.post('/', authRequired, houseController.addHouse);

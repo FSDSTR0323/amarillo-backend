@@ -4,7 +4,7 @@ const Room = require('../models/roomModel.js');
 
 //Añadimos una nueva estancia
 const addRoom = async (req,res)=>{
-    //console.log(req.user);
+    
     const newRoom = await Room.create(
         {
             name: req.body.name,
@@ -60,7 +60,9 @@ const getRooms = (req, res) => {
             filter.dueDate = { $lte: new Date(req.query.datemax) }
         }
 
-        console.log(req.user.id)
+        //console.log("ID de la casa:", req,house.id)
+        console.log(req);
+        //filter= {houseId: req.house.id}
         Room.find(filter)
             .then(roomDocs => {
                 if(roomDocs.length === 0) {

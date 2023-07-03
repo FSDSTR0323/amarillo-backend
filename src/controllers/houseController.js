@@ -2,7 +2,7 @@ const House = require ('../models/houseModel')
 
 // cambiar con house
 
-//Añadimos una nueva vivienda
+//Añadimos una nueva vivienda: hay que especificar el user: req.user.id
 const addHouse = (req,res)=>{
     //console.log(req.body);
     House.create(
@@ -28,8 +28,10 @@ const addHouse = (req,res)=>{
     })
 };
 
-//Consultamos nuestras viviendas. GET
+//Consultamos nuestras viviendas. GET. Hay que filtrarlas por req.user.id
 const getHouse = (req, res) => {
+    console.log("req.user.id: ", req.user.id);
+
     if(req.params.houseId){ //al llamar al houseId, tenemos que hacer el método findById.
         House.findById(req.params.roomId)
             .then( houseDoc => { //En este punto tenemos que pensar en si existirá o no la task con ese ID, accediendo a roomDoc
@@ -49,24 +51,29 @@ const getHouse = (req, res) => {
                 }
             })
     } else {
-        let filter = {}
-        if (req.query.status) {
-            filter.status = req.query.status
-        }
 
-        //TODO: Find by text search
+        //hacer un map de las casas para ver cuál tiene user.id=user
 
-        //TODO: Find by datemax is not working properly
-        if (req.query.datemax) {
-            filter.dueDate = { $lte: new Date(req.query.datemax) }
-        }
 
-        //console.log(req.query.status,filter)
-        House.find(filter)
+        // let filter = {}
+        // if (req.query.status) {
+        //     filter.status = req.query.status
+        // }
+
+        // //TODO: Find by text search
+
+        // //TODO: Find by datemax is not working properly
+        // if (req.query.datemax) {
+        //     filter.dueDate = { $lte: new Date(req.query.datemax) }
+        // }
+        //let filter = {user}
+        House.find({userId:req.user.id})
             .then(houseDocs => {
                 if(houseDocs.length === 0) {
                     res.status(404).send({msg: "No se han encontrado viviendas."})
                 } else {
+                    //res.house.id=
+                    console.log("listado casas: ---->>>>>>>", houseDocs)
                     res.status(200).send(houseDocs)
                 }
             })
