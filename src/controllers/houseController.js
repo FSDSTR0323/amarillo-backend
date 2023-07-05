@@ -1,21 +1,29 @@
-const House = require ('../models/houseModel')
-
-// cambiar con house
-
+const House = require ('../models/houseModel');
 //Añadimos una nueva vivienda: hay que especificar el user: req.user.id
-const addHouse = (req,res)=>{
-    console.log(req.user.id);
-    House.create(
+
+//FUNCIÓN 
+const addHouse = async (req,res)=>{
+
+    //const user = await User.findById(userId)
+    //console.log(req.body);
+    const newHouse = await House.create(
         {
             name: req.body.name,
-            address: req.body.address,
-            size: req.body.size,
+
+            street: req.body.street,
+            number: req.body.number,
+            district: req.body.district,
+            city: req.body.city,
+            country: req.body.country,
+            
+            houseSize: req.body.houseSize,
             roomsNumber: req.body.roomsNumber,
-            userId: req.user.id
+
+            //user: res.locals.user._id //Aquí le estamos solicitando el usuario que se ha registrado previamente.
         }
     )  
 
-    .then( houseDoc=>res.status(200).send({msg:"Nueva vivienda registrada"}))
+    .then( houseDoc => res.status(200).send({msg:"Nueva vivienda registrada"}))
     .catch(error=>{
         console.error(error.code);
         switch(error.code){
@@ -27,6 +35,36 @@ const addHouse = (req,res)=>{
         }
     })
 };
+
+
+//PRUEBA DE FUNCIÓN ------- ÁLVARO
+// const addHouse = async (req,res)=>{
+//     //console.log(res.locals.user._id)
+//     const houseData = {
+//             name: req.body.name,
+
+//             street: req.body.street,
+//             number: req.body.number,
+//             district: req.body.district,
+//             city: req.body.city,
+//             country: req.body.country,
+            
+//             houseSize: req.body.houseSize,
+//             roomsNumber: req.body.roomsNumber,
+
+//             //user: res.locals.user._id //Aquí le estamos solicitando el usuario que se ha registrado previamente.
+//         }
+
+//     const newHouse = await House.create(houseData);
+//     newHouse.save(function(err){
+//         if(!err){
+//             res.status(200).send({msg: 'Vivienda creada!'})
+//         } else {
+//             console.log(newHouse)
+//             res.render(err)
+//         }
+//     })
+// };
 
 //Consultamos nuestras viviendas. GET. Hay que filtrarlas por req.user.id
 const getHouse = (req, res) => {

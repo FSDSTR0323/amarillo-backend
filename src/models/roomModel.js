@@ -14,6 +14,7 @@ const roomSchema= new Schema({
     },
     roomImage: {
         type: String,
+        //required:true,
     },
     //TO DO: METER LOS DEVICES
 

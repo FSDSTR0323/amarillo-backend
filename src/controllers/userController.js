@@ -152,6 +152,7 @@ const getUsers = async (req, res) => {
     } catch(error){ return res.status(400).send(error)}
 };
 
+
 module.exports = {
     registerNewUser,
     loginUser,
