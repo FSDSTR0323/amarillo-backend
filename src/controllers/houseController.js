@@ -4,7 +4,7 @@ const House = require ('../models/houseModel')
 
 //Añadimos una nueva vivienda: hay que especificar el user: req.user.id
 const addHouse = (req,res)=>{
-    //console.log(req.body);
+    console.log(req.user.id);
     House.create(
         {
             name: req.body.name,
@@ -69,8 +69,9 @@ const getHouse = (req, res) => {
         //let filter = {user}
         House.find({userId:req.user.id})
             .then(houseDocs => {
+                console.log("houseDocs; ",houseDocs)
                 if(houseDocs.length === 0) {
-                    res.status(404).send({msg: "No se han encontrado viviendas."})
+                    res.status(200).send(houseDocs)
                 } else {
                     //res.house.id=
                     console.log("listado casas: ---->>>>>>>", houseDocs)
