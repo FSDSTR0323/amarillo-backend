@@ -9,31 +9,27 @@ const houseSchema = new Schema({
         minLength: 3,
         maxLength: 20
     },
-    address: {
-        street: {
-            type: String,
-            required: true,
-        },
-        number: {
-            type: Number,
-            required: true
-        },
-        district: {
-            type: String
-        },
-        city: {
-            type: String,
-            required: true
-        },
-        region: {
-            type: String,
-            required: true
-        },
-        country: {
-            type: String
-        }
+    
+    street: {
+        type: String,
+        required: true,
     },
-    size: {
+    number: {
+        type: Number,
+        required: true
+    },
+    district: {
+        type: String
+    },
+    city: {
+        type: String,
+        required: true
+    },
+    country: {
+        type: String
+    },
+
+    houseSize: {
         type: Number
     },
     roomsNumber: {
@@ -45,7 +41,6 @@ const houseSchema = new Schema({
         type: mongoose.Schema.Types.ObjectId,
         ref: 'User'
     },
-
 },
     { timestamps : true}
 )

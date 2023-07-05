@@ -19,8 +19,10 @@ const authRequired=(req,res,next)=>{
         //console.log("req.user decodificado: ", req.user)
         next();
     })
+};
 
-}
+
+
 module.exports = {
     authRequired,
 };

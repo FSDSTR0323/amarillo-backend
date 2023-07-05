@@ -9,8 +9,8 @@ const addRoom = async (req,res)=>{
         {
             name: req.body.name,
             roomType: req.body.type,
-            roomImage: req.body.image, //Esto es la url que nos traemos de Cloudinary
-            //houseId: 
+            roomImage: req.body.roomImage, //Esto es la url que nos traemos de Cloudinary
+            //house_.id: houseId // TENEMOS QUE MANDAR EL ID DE LA CASA A LA QUE PERTENECE
         }
     )
     .then( roomDoc => res.status(200).send({msg:"Habitación añadida"}))
@@ -66,7 +66,7 @@ const getRooms = (req, res) => {
         Room.find(filter)
             .then(roomDocs => {
                 if(roomDocs.length === 0) {
-                    res.status(404).send({msg: "No se han encontrado estancias."})
+                    res.status(200).send({msg: "No se han encontrado estancias."})
                 } else {
                     //Hay que filtrar el roomDocs por req.user/casa
                     console.log("el roomDoc: ", roomDocs)
