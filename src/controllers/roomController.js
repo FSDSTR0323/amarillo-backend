@@ -29,8 +29,9 @@ const addRoom = async (req,res)=>{
 
 //Consultamos nuestras habitaciones. GET
 const getRooms = (req, res) => {
-    if(req.params.roomId){ //al llamar al roomId, tenemos que hacer el método findById.
-        Room.findById(req.params.roomId)
+    console.log("req. getRooms by House Id", req.params.roomId)
+    if(req.params.roomId){ //al llamar al roomId, tenemos que hacer el método find
+        Room.find({"houseId":req.params.roomId})
             .then( roomDoc => { 
                 if(roomDoc === null ) {
                     res.status(400).send({msg: 'Esta estancia no existe.'})
@@ -61,7 +62,7 @@ const getRooms = (req, res) => {
         }
 
         //console.log("ID de la casa:", req,house.id)
-        console.log(req);
+        console.log("REQ: ",req);
         //filter= {houseId: req.house.id}
         Room.find(filter)
             .then(roomDocs => {

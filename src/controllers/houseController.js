@@ -1,12 +1,13 @@
 const House = require ('../models/houseModel');
-//Añadimos una nueva vivienda: hay que especificar el user: req.user.id
 
 //FUNCIÓN 
 const addHouse = async (req,res)=>{
 
     //const user = await User.findById(userId)
-    //console.log(req.body);
+    console.log("userId: ",req.user.id)
+    console.log("req body addHouse: ", req.body)
     const newHouse = await House.create(
+        
         {
             name: req.body.name,
 
@@ -19,7 +20,7 @@ const addHouse = async (req,res)=>{
             houseSize: req.body.houseSize,
             roomsNumber: req.body.roomsNumber,
 
-            //user: res.locals.user._id //Aquí le estamos solicitando el usuario que se ha registrado previamente.
+            user: req.user.id //Aquí le estamos solicitando el usuario que se ha registrado previamente.
         }
     )  
 
@@ -107,12 +108,12 @@ const getHouse = (req, res) => {
         //let filter = {user}
         House.find({userId:req.user.id})
             .then(houseDocs => {
-                console.log("houseDocs; ",houseDocs)
+                //console.log("houseDocs; ",houseDocs)
                 if(houseDocs.length === 0) {
                     res.status(200).send(houseDocs)
                 } else {
                     //res.house.id=
-                    console.log("listado casas: ---->>>>>>>", houseDocs)
+                    //console.log("listado casas: ---->>>>>>>", houseDocs)
                     res.status(200).send(houseDocs)
                 }
             })
