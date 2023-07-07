@@ -4,13 +4,13 @@ const Room = require('../models/roomModel.js');
 
 //Añadimos una nueva estancia
 const addRoom = async (req,res)=>{
-    
+    console.log ("req.body de addRoom: ",req.body)
     const newRoom = await Room.create(
         {
             name: req.body.name,
             roomType: req.body.type,
             roomImage: req.body.roomImage, //Esto es la url que nos traemos de Cloudinary
-            //house_.id: houseId // TENEMOS QUE MANDAR EL ID DE LA CASA A LA QUE PERTENECE
+            houseId: req.body.houseId // TENEMOS QUE MANDAR EL ID DE LA CASA A LA QUE PERTENECE
         }
     )
     .then( roomDoc => res.status(200).send({msg:"Habitación añadida"}))
