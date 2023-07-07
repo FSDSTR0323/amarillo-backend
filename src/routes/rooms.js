@@ -12,7 +12,7 @@ roomController = require('../controllers/roomController.js');
 // router.delete('/:roomId', authRequired, roomController.deleteRoom);
 
 router.post('/', authRequired, roomController.addRoom);
-router.get('/:roomId?', authRequired,  roomController.getRooms); 
+router.get('/:houseId?', authRequired,  roomController.getRooms); 
 router.put('/:roomId', authRequired, roomController.updateRoom);
 router.delete('/:roomId', authRequired, roomController.deleteRoom);
 

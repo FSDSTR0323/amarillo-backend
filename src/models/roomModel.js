@@ -20,7 +20,8 @@ const roomSchema= new Schema({
 
     houseId:{
         type: mongoose.Schema.Types.ObjectId,
-        ref: 'House'
+        ref: 'House',
+        required: true
     },
 },
     {timestamps:true}

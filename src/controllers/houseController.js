@@ -16,11 +16,9 @@ const addHouse = async (req,res)=>{
             district: req.body.district,
             city: req.body.city,
             country: req.body.country,
-            
             houseSize: req.body.houseSize,
             roomsNumber: req.body.roomsNumber,
-
-            user: req.user.id //Aquí le estamos solicitando el usuario que se ha registrado previamente.
+            user: req.user.id                   //Aquí le estamos solicitando el usuario que se ha registrado previamente.
         }
     )  
 
