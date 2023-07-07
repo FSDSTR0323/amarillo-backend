@@ -10,7 +10,7 @@ const addHouse = async (req,res)=>{
         
         {
             name: req.body.name,
-
+            type:req.body.type,
             street: req.body.street,
             number: req.body.number,
             district: req.body.district,
