@@ -43,7 +43,7 @@ const houseSchema = new Schema({
     userId:{
         type: mongoose.Schema.Types.ObjectId,
         ref: 'User',
-        required: true
+        required: true,
     },
 
 },

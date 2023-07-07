@@ -3,8 +3,7 @@ const House = require ('../models/houseModel');
 //FUNCIÓN 
 const addHouse = async (req,res)=>{
 
-    //const user = await User.findById(userId)
-    //console.log("userId: ", req.user.id)
+    console.log("userId: ", req.user.id)
     console.log("req body addHouse: ", req.body)
     const newHouse = await House.create(
         
@@ -19,12 +18,15 @@ const addHouse = async (req,res)=>{
             houseSize: req.body.houseSize,
             houseImg: req.body.houseImg,
             roomsNumber: req.body.roomsNumber,
-            houseImg: req.body.houseImage,         
-            userId: req.user.id                   //Aquí le estamos solicitando el usuario que se ha registrado previamente.
+            houseImg: req.body.houseImg,
+            userId: req.user.id //Aquí le estamos solicitando el usuario que se ha registrado previamente.
         }
     )  
 
-    .then( houseDoc => res.status(200).send({msg:"Nueva vivienda registrada"}))
+    .then( (houseDoc) => {
+        console.log( houseDoc )
+        res.status(200).send({msg:"Nueva vivienda registrada"})
+    })
     .catch(error=>{
         console.error("codigo error al añadir casa: ",error.code);
         switch(error.code){
@@ -36,7 +38,6 @@ const addHouse = async (req,res)=>{
         }
     })
 };
-
 
 //PRUEBA DE FUNCIÓN ------- ÁLVARO
 // const addHouse = async (req,res)=>{
