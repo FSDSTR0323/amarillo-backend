@@ -14,7 +14,7 @@ const registerNewUser = async (req, res) => {
         //console.log('este es el body de la petición de registro: ', req.body);
         //todos los datos que necesitamos deben estar presentes para poder registrar al nuevo usuario:
         if (!( name || email || password )) {
-            return res.status(400).send({msg:'Tienes que rellenar todos los campos para realizar el registro.'})
+            return res.status(400).send({msg: 'Tienes que rellenar todos los campos para realizar el registro.'})
         }
         //Chequeamos que el ususario no exista ya dentro de nuestra BD --- basado en el email
         const existingUser = await User.findOne({ email });

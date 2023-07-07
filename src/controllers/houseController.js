@@ -4,7 +4,7 @@ const House = require ('../models/houseModel');
 const addHouse = async (req,res)=>{
 
     //const user = await User.findById(userId)
-    console.log("userId: ",req.user.id)
+    //console.log("userId: ", req.user.id)
     console.log("req body addHouse: ", req.body)
     const newHouse = await House.create(
         
