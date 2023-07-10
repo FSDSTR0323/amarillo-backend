@@ -18,7 +18,8 @@ const addHouse = async (req,res)=>{
             country: req.body.country,
             houseSize: req.body.houseSize,
             roomsNumber: req.body.roomsNumber,
-            user: req.user.id                   //Aquí le estamos solicitando el usuario que se ha registrado previamente.
+            houseImg: req.body.houseImage,         
+            userId: req.user.id                   //Aquí le estamos solicitando el usuario que se ha registrado previamente.
         }
     )  
 
@@ -151,7 +152,8 @@ const updateHouse = (req, res) => {
 
 //Eliminamos nuestra estancia. DELETE
 const deleteHouse = (req, res) => {
-    House.findOneAndUpdate(
+    //    House.findOneAndUpdate(
+    House.findOneAndDelete(
         {
             _id: req.params.houseId,
             //status: { $ne: "DELETED" }
