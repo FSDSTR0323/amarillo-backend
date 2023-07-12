@@ -19,13 +19,14 @@ const addHouse = async (req,res)=>{
             houseSize: req.body.houseSize,
             houseImg: req.body.houseImg,
             roomsNumber: req.body.roomsNumber,
-            user: req.user.id                   //Aquí le estamos solicitando el usuario que se ha registrado previamente.
+            houseImg: req.body.houseImage,         
+            userId: req.user.id                   //Aquí le estamos solicitando el usuario que se ha registrado previamente.
         }
     )  
 
     .then( houseDoc => res.status(200).send({msg:"Nueva vivienda registrada"}))
     .catch(error=>{
-        console.error(error.code);
+        console.error("codigo error al añadir casa: ",error.code);
         switch(error.code){
             case 11000:
                 res.status(400).send({msg: "Error 11.000: Esta vivienda ya existe. No puedes duplicarla"})
@@ -152,7 +153,8 @@ const updateHouse = (req, res) => {
 
 //Eliminamos nuestra estancia. DELETE
 const deleteHouse = (req, res) => {
-    House.findOneAndUpdate(
+    //    House.findOneAndUpdate(
+    House.findOneAndDelete(
         {
             _id: req.params.houseId,
             //status: { $ne: "DELETED" }

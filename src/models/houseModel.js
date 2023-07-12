@@ -37,12 +37,10 @@ const houseSchema = new Schema({
         minLength: 1,
         maxLength: 20
     },
-    houseImg: {
-        type: String
-    },
     userId:{
         type: mongoose.Schema.Types.ObjectId,
-        ref: 'User'
+        ref: 'User',
+        required: true
     },
 
 },

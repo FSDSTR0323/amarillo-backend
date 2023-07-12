@@ -7,7 +7,7 @@ const deviceSchema= new Schema({
         type: String,
         enum: ['lightbulb', 'blinders', 'temperature', 'furniture'],
         required: true,
-        unique:true
+        //unique:true
     },
     status: {
         type: String,

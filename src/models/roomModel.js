@@ -5,7 +5,7 @@ const roomSchema= new Schema({
     name:{
         type:String,
         required:true,
-        unique:true
+        //unique:true
     },
     roomType: {
         type: String,
