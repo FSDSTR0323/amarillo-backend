@@ -25,7 +25,7 @@ const addHouse = async (req,res)=>{
 
     .then( houseDoc => res.status(200).send({msg:"Nueva vivienda registrada"}))
     .catch(error=>{
-        console.error(error.code);
+        console.error("codigo error al añadir casa: ",error.code);
         switch(error.code){
             case 11000:
                 res.status(400).send({msg: "Error 11.000: Esta vivienda ya existe. No puedes duplicarla"})

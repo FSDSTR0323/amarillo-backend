@@ -16,13 +16,14 @@ const addRoom = async (req,res)=>{
     .then( roomDoc => res.status(200).send({msg:"Habitación añadida"}))
     .catch(error=>{
         console.error(error.code);
-        switch(error.code){
-            case 11000:
-                res.status(400).send({msg: "Error 11.000: Esta habitación ya existe. No puedes duplicarla"})
-                break;
-            default :
-            res.status(400).send(error);
-        }
+        // switch(error.code){
+        //     case 11000:
+        //         res.status(400).send({msg: "Error 11.000: Esta habitación ya existe. No puedes duplicarla"})
+        //         break;
+        //     default :
+        //     res.status(400).send(error);
+        // }
+        res.status(400).send(error);
     })
 };
 
