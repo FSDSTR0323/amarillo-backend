@@ -109,33 +109,33 @@ const myUser = (req, res) => {
     }
 };
 
-// const updateUser = (req, res) => {
-//     User.findByIdAndUpdate(
-//         req.params.userId,
-//         {
-//             name: req.body.name,
-//             lastName: req.body.lastName,
-//             phoneNumber: req.body.phoneNumber,
-//             birthYear: req.body.birthYear
-//         }
-//     )
-//     .then( userDoc => {
-//         if( userDoc === null ){
-//             res.status(404).send({msg: 'No hemos encontrado este usuario.'})
-//         } else {
-//             res.status(200).send({userDoc})
-//         }
-//     })
-//     .catch( error => {
-//         switch(error.name){
-//             case 'CastError':
-//                 res.status(400).send({msg: 'Formato de id inválido.'})
-//                 break;
-//             default :
-//                 res.status(400).send({msg: 'Ha habido un error'})
-//         }
-//     })
-// };
+const updateUser = (req, res) => {
+    User.findByIdAndUpdate(
+        req.params.userId,
+        {
+            name: req.body.name,
+            lastName: req.body.lastName,
+            phoneNumber: req.body.phoneNumber,
+            birthYear: req.body.birthYear
+        }
+    )
+    .then( userDoc => {
+        if( userDoc === null ){
+            res.status(404).send({msg: 'No hemos encontrado este usuario.'})
+        } else {
+            res.status(200).send({userDoc})
+        }
+    })
+    .catch( error => {
+        switch(error.name){
+            case 'CastError':
+                res.status(400).send({msg: 'Formato de id inválido.'})
+                break;
+            default :
+                res.status(400).send({msg: 'Ha habido un error'})
+        }
+    })
+};
 
 //Necesitamos crear una función que nos devuelva un array de objetos. Cada objeto es un usuario.
 //Este endpoint nos va a servir para llamar a todos los usuarios.
@@ -158,6 +158,6 @@ module.exports = {
     loginUser,
     getUsers,
     // myUser,
-    //updateUser,
+    updateUser,
 };
 

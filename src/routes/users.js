@@ -13,7 +13,7 @@ router.post('/login', userController.loginUser);
 //Con autenticación
 router.get('/',authRequired, userController.getUsers); //este endpoint nos devuelve todos los usuarios de la app en un array de objetos
 // router.get('/myUser', authRequired, userController.myUser); ----> este endpoint esta dando problemas
-// router.put('/myUser', authRequired, userController.updateUser);
+router.put('/myUser', authRequired, userController.updateUser);
 // router.get('/', userController.getUsers); //este endpoint nos devuelve todos los usuarios de la app en un array de objetos
 // router.get('/me',  userController.myUser);
 
