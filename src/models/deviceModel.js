@@ -5,16 +5,14 @@ const deviceSchema= new Schema({
     name: String,
     deviceType: {
         type: String,
-        enum: ['lightbulb', 'blinders', 'temperature', 'furniture'],
+        enum: ['Lightbulb', 'Blinders', 'Temperature', 'Furniture', 'Other'],
         required: true,
         //unique:true
     },
     status: {
-        type: String,
-        enum: ['On', 'Off'],
-        
+        type: Boolean,        
     },
-    data: {},       //Posibles datos de los dispositivos a representar
+    deviceData: {},       //Posibles datos de los dispositivos a representar
     roomId:{
         type: mongoose.Schema.Types.ObjectId,
         ref: 'Room',
