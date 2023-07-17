@@ -1,47 +1,36 @@
 const Device = require('../models/deviceModel.js')
 
-
 //Añadimos una nuevo dispositivo
 const addDevice = async (req,res)=>{
-    try {
-        //console.log(req.body);
-        const { name, deviceType, status, roomId } = req.body;
-        const existingDevice = await Device.findOne({ name });
-        if (existingDevice) {
-            return res.status(400).send({msg:'Este Device ya está registrado.'})
+    console.log('Estos son los datos del nuevo dispositivo: ', req.body);
+    const addDevice = await Device.create(
+        {
+            name: req.body.name,
+            deviceType: req.body.deviceType,
+            status: req.body.status,
+            deviceData: req.body.deviceData,
+            roomId: req.body.roomId
         }
-
-        Device.create(
-            {
-                name,
-                deviceType,
-                status,
-                roomId
-            }
-        )
-        res.status(200).send({msg:"Dispositivo añadido"})
-    } catch (error) {
+    )
+    .then( deviceDoc => res.status(200).send({msg:'Dispositivo añadido!'}))
+    .catch(error => {
         console.error(error.code);
-        switch(error.code){
-            case 11000:
-                res.status(400).send({msg: "Error 11.000:"})
-                break;
-            default :
-            res.status(400).send(error);
-        }
-    }
+        res.status(400).send({msg:'Algo ha salido mal.'})
+    })
 };
 
 const getDevices = async (req, res) => {
-        // podríamos pedir devices en habitación: on; tipo: persiana; todos
-        // Siempre necesitaré el roomId para saber 
-    //console.log("req.params. :", req.params)
-    if(req.params.deviceId){
-        try{
-            const devicesDoc = await Device.findById(req.params.deviceId)
-            if (!devicesDoc||devicesDoc.length=== null) return res.status(404).send({msg: "No se han encontrado dispositivos."})
-            return res.status(200).send( devicesDoc )
-            } catch( error) {  
+    console.log('req. getDevices por id de habitación: ', req.params.roomId )
+    if(req.params.roomId){
+        Device.find({'roomId': req.params.roomId})
+            .then( deviceDocs => {
+                if( deviceDocs === null ){
+                    res.status(200).send({msg:'No hemos encontrado dispositivos conectados.'})
+                } else {
+                    res.status(200).send( deviceDocs)
+                }
+            })
+            .catch ( error => {  //De esta manera podemos controlar el hecho de que el error sea debido a un ID inválido
                 switch (error.name){
                     case 'Cast Error':
                         res.status(400).send({msg: 'Formato de id inválido.'})
@@ -49,21 +38,34 @@ const getDevices = async (req, res) => {
                     default :
                         res.status(400).send(error)
                 }
-            }
+            })
     } else {
-        const devicesDoc = await Device.find()
-        try{
-            if(devicesDoc.length === 0) res.status(404).send({msg: "No se han encontrado dispositivos."})
-            //console.log('Estos son mis dispositivos: ', devicesDoc);
-            return res.status(200).send(devicesDoc)
-            } catch(error) {
-            //console.log("error: ", error)
-            res.status(400).send(error)
+        let filter = {}
+        if (req.query.status) {
+            filter.status = req.query.status
         }
+
+        //TODO: Find by text search
+
+        //TODO: Find by datemax is not working properly
+        if (req.query.datemax) {
+            filter.dueDate = { $lte: new Date(req.query.datemax) }
+        }
+
+        Device.find(filter)
+            .then( deviceDocs => {
+                if( deviceDocs.length === 0){
+                    res.status(200).send({msg:'No se han encontrado resultados.'})
+                } else {
+                    console.log('Estos son los datos que traemos de la BBDD: ', deviceDocs );
+                    res.status(200).send(deviceDocs)
+                }
+            })
+            .catch(error => res.status(400).send(error))
     }
 };
 
-//Podemos editar nuestra estancia. UPDATE CON PUT
+//Podemos editar nuestro dispositivo. UPDATE CON PUT
 const updateDevice = (req, res) => {
     console.log (req.params.status);
     // if (req.params.status==="On"){
@@ -132,9 +134,6 @@ const deleteDevice = (req, res) => {
             }
         })
 };
-
-
-
 
 module.exports = {
     addDevice,

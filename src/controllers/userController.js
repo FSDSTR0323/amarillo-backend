@@ -3,6 +3,9 @@ const jwt = require('jsonwebtoken');
 const bcrypt = require('bcrypt');
 const cookieParser = require('cookie-parser');
 
+const util = require('util');
+const sendEmail = require('../utils/email.js');
+
 require('dotenv').config();
 
 const mySecret = process.env.TOKENSECRET;
@@ -42,9 +45,23 @@ const registerNewUser = async (req, res) => {
             mySecret, //este es el secreto que traemos como variable de entorno con process.env.TOKENSECRET
             { expiresIn: '2h'}
         );
-        savedUser.token = token;
-        //newUser.password = undefined;
-
+        newUser.token = token;
+        
+        //Mandamos el email de validación
+        try{
+            await sendEmail({
+                email: newUser.email,
+                subject: 'Homehub te da la bienvenida.',
+                message: '<div> <h2>Gracias por registrarte en la app.</h2> <p>Esto es un correo de verificación estándar.</p> </div>', 
+            })
+            res.status(200).send({
+                status: 'success',
+                message: 'Correo de bienvenida enviado al nuevo usuario.'
+            })
+        } catch(error) {
+            console.log(error)
+        }
+        
         res.status(201).send({
             msg:'¡Usuario creado correctamente!',
             token: token,
