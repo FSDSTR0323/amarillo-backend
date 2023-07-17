@@ -49,11 +49,12 @@ const registerNewUser = async (req, res) => {
         
         //Mandamos el email de validación
         try{
-            await sendEmail({
+            const email = await sendEmail({
                 email: newUser.email,
                 subject: 'Homehub te da la bienvenida.',
                 message: '<div> <h2>Gracias por registrarte en la app.</h2> <p>Esto es un correo de verificación estándar.</p> </div>', 
             })
+            console.log('Este es el email del registro',email)
             res.status(200).send({
                 status: 'success',
                 message: 'Correo de bienvenida enviado al nuevo usuario.'
@@ -117,7 +118,19 @@ const myUser = (req, res) => {
         res.status(400).send({msg: 'No es un token válido.'})
     }
 };
-
+const dataUser = (req, res) => {
+   if(req.params.userId){
+    User.find({"userId":req.params.userId})
+        .then( userDoc => {
+            if(userDoc === null) {
+                res.status(400).send({msg: 'Este usuario no existe.'}) 
+            } else {
+                res.status(200).send( userDoc )
+            }
+        })
+        .catch( error => console.log('error'))
+   }    
+}
 const updateUser = (req, res) => {
     User.findByIdAndUpdate(
         req.params.userId,
@@ -166,7 +179,8 @@ module.exports = {
     registerNewUser,
     loginUser,
     getUsers,
-    // myUser,
+    myUser,
+    dataUser,
     updateUser,
 };
 

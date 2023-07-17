@@ -34,6 +34,9 @@ const userSchema= new Schema({
         default: 'superadmin',
         enum: ['superadmin','admin', 'viewer']
     },
+    userImg: {
+        type: String,
+    },
 },
     {timestamps:true}
 );
