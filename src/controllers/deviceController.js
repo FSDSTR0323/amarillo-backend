@@ -65,6 +65,11 @@ const getDevices = async (req, res) => {
 
 //Podemos editar nuestra estancia. UPDATE CON PUT
 const updateDevice = (req, res) => {
+    console.log (req.params.status);
+    // if (req.params.status==="On"){
+    // }else 
+
+
     Device.findByIdAndUpdate(
         req.params.deviceId,
         {
