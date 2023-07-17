@@ -6,7 +6,7 @@ const mySecret = process.env.TOKENSECRET;
 
 const authRequired=(req, res, next)=>{
     
-    //console.log('req.token', req.headers.authorization)
+    // console.log('req.token', req.headers.authorization)
 
     const token = req.headers.authorization || false;
 

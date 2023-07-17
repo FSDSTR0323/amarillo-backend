@@ -30,8 +30,8 @@ const addRoom = async (req,res)=>{
 
 //Consultamos nuestras habitaciones. GET
 const getRooms = (req, res) => {
-    console.log("req. params cuando getRooms: ", req.params)
-    console.log("req. getRooms by House Id", req.params.houseId)
+    // console.log("req. params cuando getRooms: ", req.params)
+    // console.log("req. getRooms by House Id", req.params.houseId)
     if(req.params.houseId){ //al llamar al roomId, tenemos que hacer el método find
         Room.find({"houseId":req.params.houseId})
             .then( roomDoc => { 
@@ -64,7 +64,7 @@ const getRooms = (req, res) => {
         }
 
         //console.log("ID de la casa:", req,house.id)
-        console.log("REQ: ",req);
+        // console.log("REQ: ",req);
         //filter= {houseId: req.house.id}
         Room.find(filter)
             .then(roomDocs => {

@@ -10,8 +10,7 @@ const mySecret = process.env.TOKENSECRET;
 const registerNewUser = async (req, res) => {
     try {
         //Tomamos el data que tengamos en el body - frontend
-        const { name, email, password, savedToken } = req.body;
-        //console.log('este es el body de la petición de registro: ', req.body);
+        const { name, email, password } = req.body;
         //todos los datos que necesitamos deben estar presentes para poder registrar al nuevo usuario:
         if (!( name || email || password )) {
             return res.status(400).send({msg: 'Tienes que rellenar todos los campos para realizar el registro.'})
@@ -22,6 +21,9 @@ const registerNewUser = async (req, res) => {
             return res.status(400).send({msg:'Este usuario ya está registrado.'})
         }
         //Ahora requerimos de la libreria de bcrypt para encriptar la contraseña que nos pasan por el front.
+        // console.log("Usuario no registrado, hasheamos el pass " )
+
+
         const encriptedPassword = await bcrypt.hash(password, 10)
         
         //Generamos y guardamos el nuevo usuario que enviaremos a la BD
@@ -29,18 +31,19 @@ const registerNewUser = async (req, res) => {
             name,
             email,
             password: encriptedPassword,
+            
         });
         const savedUser = await newUser.save();
+        // console.log("usuario guardado en BBDD: " , savedUser)
 
         //Finalmente, generamos el token para el usuario.
-        const token = jwt.sign(
-            {id: User._id, email}, //este es el payload del token.
+        const token = await jwt.sign(
+            {id: savedUser._id, email}, //este es el payload del token.
             mySecret, //este es el secreto que traemos como variable de entorno con process.env.TOKENSECRET
             { expiresIn: '2h'}
         );
-        newUser.token = token;
+        savedUser.token = token;
         //newUser.password = undefined;
-
 
         res.status(201).send({
             msg:'¡Usuario creado correctamente!',
@@ -62,29 +65,18 @@ const registerNewUser = async (req, res) => {
 const loginUser = async (req, res) => {
     const { email, password } = req.body;
     try {
-        //console.log('mi req body es: ', req.body);
-        // if(!(email && password)){
-        //     return res.status(400).send({msg:'Para acceder tienes que introducir tu email y tu contraseña de usuario.'})
-        // };
         const userFound = await User.findOne( { email } )
-        //console.log('el usuario encontrado es: ', userFound);
         if (!userFound) return res.status(400).json({message: "Usuario no encontrado"});        //uso return para que salga una vez que lance el error
-
         const isMatch =await bcrypt.compare(password,userFound.password)
         if (!isMatch) return res.status(400).json({message: "Password incorrecto"});        //uso return para que salga una vez que lance el error
         
         const token = jwt.sign(
-            {id: userFound._id, //el campo _id que nos facilita mongoose.
+            {id: userFound._id,             //el campo _id que nos facilita mongoose.
                 email: userFound.email},
-                mySecret, //mySecret traido desde las variables de entorno .env
-                { expiresIn: '2h'} //propiedad para expirar el token en 2 horas.
+                mySecret,                   //mySecret traido desde las variables de entorno .env
+                { expiresIn: '2h'}          //propiedad para expirar el token en 2 horas.
             );
-        //console.log("Token generado: ", token)
-        // const options = {
-        //         expires: new Date(Date.now() + 2 * 24 * 60 * 60 * 1000),
-        //         httpOnly: true,
-        // };
-            // return res.status(200).cookie('token', token, options).send({success: true, 'token': token})
+        
         return res.status(200).send({success: true, token})
 
     } catch(error) {

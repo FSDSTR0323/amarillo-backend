@@ -2,9 +2,9 @@ const House = require ('../models/houseModel');
 
 //FUNCIÓN 
 const addHouse = async (req,res)=>{
-
-    console.log("userId: ", req.user.id)
-    console.log("req body addHouse: ", req.body)
+    // console.log("req user: ", req.user)
+    // console.log("userId: ", req.user.id)
+    // console.log("req body addHouse: ", req.body)
     const newHouse = await House.create(
         
         {
@@ -24,7 +24,7 @@ const addHouse = async (req,res)=>{
     )  
 
     .then( (houseDoc) => {
-        console.log( houseDoc )
+        // console.log( houseDoc )
         res.status(200).send({msg:"Nueva vivienda registrada"})
     })
     .catch(error=>{
