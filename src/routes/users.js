@@ -42,7 +42,7 @@ router.put('/editar-usuario/:id', async (req, res) => {
     res.status(500).json({ message: 'Error al actualizar los datos del usuario' });
   }
 });
-router.get('/',authRequired, userController.findUsers)
+//router.get('/',authRequired, userController.findUsers)
 //Con autenticación
 router.get('/',authRequired, userController.getUsers); //este endpoint nos devuelve todos los usuarios de la app en un array de objetos
 router.get('/dataUser', authRequired, userController.dataUser); 

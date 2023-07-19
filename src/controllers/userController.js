@@ -119,21 +119,22 @@ const myUser = (req, res) => {
     }
 };
 const dataUser = (req, res) => {
-   if(req.params.userId){
-    User.find({"userId":req.params.userId})
-        .then( userDoc => {
-            if(userDoc === null) {
-                res.status(400).send({msg: 'Este usuario no existe.'}) 
-            } else {
-                res.status(200).send( userDoc )
-            }
-        })
-        .catch( error => console.log('error'))
-   }    
+    console.log("Data User Id: ", req.user.id)
+    if(req.user.id){
+        User.findById(req.user.id)
+            .then( userDoc => {
+                if(userDoc === null) {
+                    res.status(400).send({msg: 'Este usuario no existe.'}) 
+                } else {
+                    res.status(200).send( userDoc )
+                }
+            })
+            .catch( error => console.log('error'))
+    }    
 }
 const updateUser = (req, res) => {
     User.findByIdAndUpdate(
-        req.params.userId,
+        req.user.id,
         {
             name: req.body.name,
             lastName: req.body.lastName,
