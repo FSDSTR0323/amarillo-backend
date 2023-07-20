@@ -11,6 +11,11 @@ userController = require('../controllers/userController');
 router.post('/register', userController.registerNewUser);
 router.post('/login', userController.loginUser);
 
+//Con autenticación
+router.get('/dataUser', authRequired, userController.dataUser);  // Ruta para pedir datos del usuario
+router.put('/dataUser', authRequired, userController.updateUser); // Ruta para actualizar los datos del usuario
+
+
 // Ruta para actualizar los datos del usuario
 router.put('/editar-usuario/:id', async (req, res) => {
     const userId = req.params.id;
@@ -42,11 +47,11 @@ router.put('/editar-usuario/:id', async (req, res) => {
     res.status(500).json({ message: 'Error al actualizar los datos del usuario' });
   }
 });
+
+//router.get('/',authRequired, userController.getUsers); //este endpoint nos devuelve todos los usuarios de la app en un array de objetos
+
 //router.get('/',authRequired, userController.findUsers)
-//Con autenticación
-router.get('/',authRequired, userController.getUsers); //este endpoint nos devuelve todos los usuarios de la app en un array de objetos
-router.get('/dataUser', authRequired, userController.dataUser); 
-router.put('/dataUser', authRequired, userController.updateUser);
+
 // router.get('/', userController.getUsers); //este endpoint nos devuelve todos los usuarios de la app en un array de objetos
 // router.get('/me',  userController.myUser);
 

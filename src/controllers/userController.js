@@ -54,26 +54,24 @@ const registerNewUser = async (req, res) => {
                 subject: 'Homehub te da la bienvenida.',
                 message: '<div> <h2>Gracias por registrarte en la app.</h2> <p>Esto es un correo de verificación estándar.</p> </div>', 
             })
-            console.log('Este es el email del registro',email)
+            console.log('Este es el email del registro',newUser.email)
             res.status(200).send({
                 status: 'success',
-                message: 'Correo de bienvenida enviado al nuevo usuario.'
+                message: 'Correo de bienvenida enviado al nuevo usuario.',
+                msg:'¡Usuario creado correctamente!',
+                token: token,
+                user: {
+                    id: savedUser._id,
+                    username: savedUser.username,
+                    email: savedUser.email,
+                    createdAt: savedUser.createdAt,
+                    updatedAt: savedUser.updatedAt,
+                }
             })
         } catch(error) {
             console.log(error)
         }
         
-        res.status(201).send({
-            msg:'¡Usuario creado correctamente!',
-            token: token,
-            user: {
-                id: savedUser._id,
-                username: savedUser.username,
-                email: savedUser.email,
-                createdAt: savedUser.createdAt,
-                updatedAt: savedUser.updatedAt,
-            }
-        })
     } catch(error) {
         console.log(error)
         res.status(500).json({message: 'error registrando usuario'});
@@ -133,14 +131,18 @@ const dataUser = (req, res) => {
     }    
 }
 const updateUser = (req, res) => {
+    console.log("req.user.", req.user)
+    console.log("req.body.", req.body)
     User.findByIdAndUpdate(
         req.user.id,
+        {$set:
         {
             name: req.body.name,
             lastName: req.body.lastName,
             phoneNumber: req.body.phoneNumber,
             birthYear: req.body.birthYear
         }
+    }
     )
     .then( userDoc => {
         if( userDoc === null ){
