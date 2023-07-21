@@ -6,8 +6,15 @@ const jwt = require('jsonwebtoken');
 
 const port = process.env.PORT || 9000;
 
+const corsOptions = {
+	origin: "https://amarillo-frontend-production.up.railway.app",
+	credentials: true,
+}
+
+
 app.use(express.json());
-app.use(cors());
+app.use(cors(corsOptions));
+
 app.listen(port, () => console.log("El servidor está escuchando en el port", port))
 
 const mongoose = require("mongoose");
