@@ -10,7 +10,7 @@ app.use(express.json());
 
 //Para producción
 const corsOptions = {
-	origin: "https://homehub-production.up.railway.app",
+	origin: "https://homehub-production.up.railway.app/",
 	credentials: true,
 }
 app.use(cors(corsOptions));
